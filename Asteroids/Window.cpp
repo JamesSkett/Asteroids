@@ -4,12 +4,6 @@ Window::Window(uint32_t width, uint32_t height, const sf::String& title)
 	: mWindow(sf::VideoMode(width, height), title)
 {
 	mWindow.setVerticalSyncEnabled(true);
-
-	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f((float)width, (float)height));
-	mWindow.setView(view);
-
-	mRenderTex.create(width, height);
-	mRenderTex.setView(view);
 }
 
 bool Window::HandleEvents()
@@ -27,12 +21,6 @@ bool Window::HandleEvents()
 			sf::Vector2u size = sf::Vector2u(event.size.width, event.size.height);
 
 			mWindow.setSize(size);
-
-			sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f((float)size.x, (float)size.y));
-			mWindow.setView(view);
-
-			mRenderTex.create(size.x, size.y);
-			mRenderTex.setView(view);
 		}
 		else if (event.type == sf::Event::KeyPressed)
 		{
@@ -49,7 +37,6 @@ bool Window::HandleEvents()
 void Window::BeginFrame()
 {
 	mWindow.clear();
-	mRenderTex.clear();
 }
 
 void Window::Display()
