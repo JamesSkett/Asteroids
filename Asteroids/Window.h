@@ -15,11 +15,8 @@ public:
 	void Display();
 
 	sf::RenderWindow& GetRenderWindow() { return mWindow; }
-	sf::RenderTexture& GetRenderTex() { return mRenderTex; }
 
 private:
 
 	sf::RenderWindow mWindow;
-
-	sf::RenderTexture mRenderTex;
 };
