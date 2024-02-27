@@ -14,9 +14,10 @@ public:
 
 	void Display();
 
-	sf::RenderWindow& GetRenderWindow() { return mWindow; }
+	sf::RenderWindow& GetRenderWindow() { return m_window; }
 
 private:
 
-	sf::RenderWindow mWindow;
+	sf::RenderWindow m_window;
+
 };

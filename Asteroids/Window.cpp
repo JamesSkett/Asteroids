@@ -1,45 +1,46 @@
 #include "Window.h"
 
 Window::Window(uint32_t width, uint32_t height, const sf::String& title)
-	: mWindow(sf::VideoMode(width, height), title)
+	: m_window(sf::VideoMode(width, height), title)
 {
-	mWindow.setVerticalSyncEnabled(true);
+	m_window.setVerticalSyncEnabled(true);
+
 }
 
 bool Window::HandleEvents()
 {
 	sf::Event event;
 
-	while (mWindow.pollEvent(event))
+	while (m_window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			mWindow.close();
+			m_window.close();
 		}
 		else if (event.type == sf::Event::Resized)
 		{
 			sf::Vector2u size = sf::Vector2u(event.size.width, event.size.height);
 
-			mWindow.setSize(size);
+			m_window.setSize(size);
 		}
 		else if (event.type == sf::Event::KeyPressed)
 		{
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				mWindow.close();
+				m_window.close();
 			}
 		}
 	}
 
-	return mWindow.isOpen();
+	return m_window.isOpen();
 }
 
 void Window::BeginFrame()
 {
-	mWindow.clear();
+	m_window.clear();
 }
 
 void Window::Display()
 {
-	mWindow.display();
+	m_window.display();
 }
