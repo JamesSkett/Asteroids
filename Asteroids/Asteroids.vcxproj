@@ -84,12 +84,15 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Ship.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
