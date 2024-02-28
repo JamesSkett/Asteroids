@@ -9,8 +9,9 @@ class GameWorld
 public:
 	struct Resources
 	{
-		sf::Texture m_playerTex;
+		sf::Texture m_shipTex;
 		sf::Texture	m_asteroidTex;
+		sf::Texture m_bulletTex;
 
 		sf::Font m_MainFont;
 	};
@@ -24,7 +25,7 @@ public:
 
 	void Shutdown();
 
-	sf::RenderWindow& GetRenderTex() const { return m_window.GetRenderWindow(); }
+	sf::RenderWindow& GetRenderWindow() const { return m_window.GetRenderWindow(); }
 	const Resources& GetResources() const { return m_resources; }
 
 	template<typename T>

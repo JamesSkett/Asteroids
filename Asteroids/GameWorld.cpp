@@ -12,8 +12,9 @@ bool GameWorld::Load()
     bool success = true;
 
     // Check if assets load correctly
-    success &= m_resources.m_playerTex.loadFromFile("./assets/Ship.png");
-    success &= m_resources.m_asteroidTex.loadFromFile("./assets/Asteroid.png");
+    success &= m_resources.m_shipTex.loadFromFile("./assets/Ship.png");
+	success &= m_resources.m_asteroidTex.loadFromFile("./assets/Asteroid.png");
+	success &= m_resources.m_bulletTex.loadFromFile("./assets/Asteroid.png");
 
     //success &= m_Resources.m_MainFont.loadFromFile("./assets/Fonts/RussoOne-Regular.ttf");
 
@@ -36,7 +37,7 @@ void GameWorld::Draw()
     {
         if (entity != nullptr && !entity->IsDead())
         {
-            entity->Draw(GetRenderTex());
+            entity->Draw(GetRenderWindow());
         }
     }
 
@@ -52,6 +53,11 @@ void GameWorld::Draw()
 
 void GameWorld::Shutdown()
 {
+	if (m_ship != nullptr)
+	{
+		delete m_ship;
+		m_ship = nullptr;
+	}
 }
 
 void GameWorld::UpdateEntities(float dt)
