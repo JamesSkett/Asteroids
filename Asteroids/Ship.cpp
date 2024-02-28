@@ -1,8 +1,8 @@
 #include "Ship.h"
 #include "GameWorld.h"
-
+#include "Bullet.h"
 Ship::Ship(GameWorld& world) 
-	: Entity(world, world.GetResources().m_playerTex)
+	: Entity(world, world.GetResources().m_shipTex)
 {
 	SetPosition(sf::Vector2f(400, 400));
 	GetSprite().setOrigin(GetSprite().getLocalBounds().width * Math::Half, GetSprite().getLocalBounds().height * Math::Half);
@@ -20,12 +20,20 @@ void Ship::UpdateScore(int val)
 void Ship::OnUpdate(float dt)
 {
 	UpdateMovement(dt);
-
+	UpdateGun(dt);
 
 }
 
 void Ship::OnRender(sf::RenderTexture& rt)
 {
+}
+
+void Ship::OnApplyDamage(const Entity* source, float& damage)
+{
+	//ship disappear
+	//wait a second
+	//respawn ship in centre
+	//wait 3 seconds until damage can be taken again
 }
 
 void Ship::OnDestroy()
@@ -69,5 +77,28 @@ void Ship::UpdateMovement(float dt)
 		// Slow the player down by reversing velocity
 		SetAcceleration(GetVelocity() * -1.0f);
 	}
+}
+
+void Ship::UpdateGun(float dt)
+{
+	sf::Vector2f gunDir = sf::Vector2f(sin(Math::DegreesToRadians(m_rotation)), -cos(Math::DegreesToRadians(m_rotation)));
+
+
+	m_shootCooldown -= dt;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (m_shootCooldown <= 0.0f)
+		{
+			m_shootCooldown = s_shootDelay;
+
+			if (Bullet* bullet = GetWorld().SpawnEntity<Bullet>())
+			{
+				bullet->Launch(GetPosition(), gunDir, this);
+			}
+		}
+	}
+
+
 }
 

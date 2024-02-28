@@ -13,6 +13,8 @@ protected:
 	void OnUpdate(float dt) override;
 	void OnRender(sf::RenderTexture& rt) override;
 
+	void OnApplyDamage(const Entity* source, float& damage) override;
+
 	void OnDestroy() override;
 
 private:
@@ -23,7 +25,7 @@ private:
 
 
 	// Gun
-	static constexpr float s_shootDelay = 0.1f;
+	static constexpr float s_shootDelay = 0.5f;
 	float m_shootCooldown = 0.0f;
 
 	// Health
@@ -34,6 +36,6 @@ private:
 	int m_currentScore = 0;
 
 	void UpdateMovement(float dt);
-
+	void UpdateGun(float dt);
 };
 
