@@ -41,12 +41,24 @@ public:
 	void  SetCurrentLives(float lives) { m_currentLives = lives; }
 	float GetCurrentLives() const { return m_currentLives; }
 
+	void SetCanWrap(bool canWrap) { m_canWrap = canWrap; }
+	bool GetCanWrap() const { return m_canWrap; }
+
 	void Kill() { m_currentLives = 0; }
 	bool IsDead() { return m_currentLives == 0; }
 
 	bool		 TestCollision(const Entity& other);
+
+	void ApplyDamage(const Entity* source, float damage);
+
 	virtual void OnCollision(Entity& other) { }
 protected:
+	// OVerride to control if this entity can collide with the other.
+	virtual bool CollidesWith(const Entity& other) const { return false; }
+
+	// Override to modify any damage being applied.
+	virtual void OnApplyDamage(const Entity* source, float& damage) { }
+
 	// Override to respond to this entity being killed.
 	virtual void OnDestroy() { }
 
@@ -71,5 +83,7 @@ private:
 
 	int m_maxLives = 3;
 	int m_currentLives = 3;
+
+	bool m_canWrap = true;
 };
 
