@@ -44,6 +44,12 @@ public:
 	void SetCanWrap(bool canWrap) { m_canWrap = canWrap; }
 	bool GetCanWrap() const { return m_canWrap; }
 
+	void SetInGrace(bool inGrace) { m_inGrace = inGrace; }
+	bool GetInGrace() const { return m_inGrace; }
+
+	void SetRadius(float radius) { m_radius = radius; }
+	float GetRadius() const { return m_radius; }
+
 	void Kill() { m_currentLives = 0; }
 	bool IsDead() { return m_currentLives == 0; }
 
@@ -69,6 +75,7 @@ protected:
 	float m_rotation = 0.0f;
 
 private:
+	static constexpr float s_graceTime = 0.5f;
 
 	GameWorld& m_world;
 
@@ -80,10 +87,15 @@ private:
 	sf::Vector2f m_position = sf::Vector2f(0.0f, 0.0f);
 
 	float m_maxSpeed = 500.0f;
+	float m_graceTimer = s_graceTime;
 
 	int m_maxLives = 3;
 	int m_currentLives = 3;
 
 	bool m_canWrap = true;
+	bool m_inGrace = false;
+
+	float m_radius = 24.0f;
+
 };
 

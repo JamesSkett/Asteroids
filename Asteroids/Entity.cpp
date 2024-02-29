@@ -4,6 +4,7 @@
 Entity::Entity(GameWorld& world, const sf::Texture& texture)
 	: m_world(world), m_sprite(texture)
 {
+	m_inGrace = true;
 }
 
 Entity::~Entity()
@@ -12,10 +13,19 @@ Entity::~Entity()
 
 void Entity::Destroy()
 {
+	OnDestroy();
 }
 
 void Entity::Update(float dt)
 {
+	m_graceTimer -= dt;
+	if (m_graceTimer < 0.0f)
+	{
+		m_graceTimer += s_graceTime;
+
+		m_inGrace = false;
+	}
+
 	// Update velocity based on acceleration and deltaTime
 	m_velocity += m_acceleration * dt;
 
@@ -42,14 +52,7 @@ void Entity::Update(float dt)
 	}
 	else
 	{
-		if (m_position.x + m_sprite.getLocalBounds().width * Math::Half < 0.0f)
-			Kill();
-		if (m_position.x > m_world.GetRenderWindow().getSize().x)
-			Kill();
-		if (m_position.y + m_sprite.getLocalBounds().height * Math::Half < 0.0f)
-			Kill();
-		if (m_position.y > m_world.GetRenderWindow().getSize().y)
-			Kill();
+
 	}
 
 	m_sprite.setPosition(m_position);
@@ -64,6 +67,22 @@ void Entity::Draw(sf::RenderWindow& rt)
 
 bool Entity::TestCollision(const Entity& other)
 {
+	if (!m_inGrace)
+	{
+		if (CollidesWith(other) || other.CollidesWith(*this))
+		{
+			float dx = GetPosition().x - other.GetPosition().x;
+			float dy = GetPosition().y - other.GetPosition().y;
+			float distance = Math::Length(sf::Vector2f(dx, dy));
+
+			if (distance < GetRadius() + other.GetRadius())
+			{
+				printf("Collision");
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
