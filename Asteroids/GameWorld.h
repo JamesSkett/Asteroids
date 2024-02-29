@@ -32,6 +32,7 @@ public:
 	T* SpawnEntity();
 
 private:
+	static constexpr float s_asteroidSpawnTime = 5.0f;
 
 	Resources m_resources;
 
@@ -41,8 +42,13 @@ private:
 	std::vector<Entity*> m_entities;
 	std::vector<Entity*> m_entitiesToAdd;
 
-	void UpdateEntities(float dt);
+	float m_asteroidSpawnTimer = s_asteroidSpawnTime;
 
+	void UpdateEntities(float dt);
+	void UpdateAsteroids(float dt);
+
+	void SpawnNewAsteroid();
+	void UpdateCollisions();
 };
 
 template<typename T>
