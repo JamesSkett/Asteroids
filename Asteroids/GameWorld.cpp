@@ -47,15 +47,6 @@ void GameWorld::Draw()
 			entity->Draw(GetRenderWindow());
 		}
 	}
-
-	//sf::Sprite fullScreenSprite(GetRenderTex().getTexture());
-
-	//const sf::Vector2f& vpSize = m_window.GetRenderWindow().getView().getSize();
-	//fullScreenSprite.setOrigin(static_cast<float>(vpSize.x) * Math::Half, static_cast<float>(vpSize.y) * Math::Half);
-
-	//fullScreenSprite.setScale(sf::Vector2f(1.0f, -1.0f));
-
-	//m_window.GetRenderWindow().draw(fullScreenSprite);
 }
 
 void GameWorld::Shutdown()
