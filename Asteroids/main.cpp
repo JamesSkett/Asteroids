@@ -4,6 +4,8 @@
 
 int main()
 {
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
 	Window	  window(800, 800, "Asteroids");
 	GameWorld world(window);
 
