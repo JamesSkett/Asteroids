@@ -6,6 +6,7 @@ Ship::Ship(GameWorld& world)
 {
 	SetPosition(sf::Vector2f(400, 400));
 	GetSprite().setOrigin(GetSprite().getLocalBounds().width * Math::Half, GetSprite().getLocalBounds().height * Math::Half);
+	SetRadius(32.0f);
 }
 
 Ship::~Ship()
