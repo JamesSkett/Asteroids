@@ -29,14 +29,16 @@ protected:
 private:
 	e_asteroidSize m_asteroidSize = e_asteroidSize::LARGE;
 
-	static constexpr float s_minMoveSpeed = 50.0f;
-	static constexpr float s_maxMoveSpeed = 100.0f;
-	static constexpr float s_minRotationSpeed = Math::Pi * 0.25f;
-	static constexpr float s_maxRotationSpeed = Math::Pi * 0.5f;
-	static constexpr float s_enableWrapTime = 0.5f;
+	const float m_minMoveSpeed = 50.0f;
+	const float m_maxMoveSpeed = 100.0f;
+	const float m_minRotationSpeed = Math::Pi * 0.25f;
+	const float m_maxRotationSpeed = Math::Pi * 0.5f;
+	const float m_enableWrapTime = 0.5f;
 
 	float m_scale = 1.5f;
 	float m_rotationSpeed = 0.0f;
-	float m_enableWrapTimer = s_enableWrapTime;
+	float m_enableWrapTimer = m_enableWrapTime;
+
+	bool CollidesWith(const Entity& other) const;
 };
 

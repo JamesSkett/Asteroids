@@ -35,7 +35,7 @@ void Asteroid::OnUpdate(float dt)
 	m_enableWrapTimer -= dt;
 	if (m_enableWrapTimer < 0.0f)
 	{
-		m_enableWrapTimer += s_enableWrapTime;
+		m_enableWrapTimer += m_enableWrapTime;
 
 		SetCanWrap(true);
 	}
@@ -94,12 +94,17 @@ void Asteroid::SetAsteroidSize(e_asteroidSize size)
 	sf::Vector2f vel(Math::FRandRange(-1.0f, 1.0f), Math::FRandRange(-1.0f, 1.0f));
 	vel = Math::Normalised(vel);
 
-	const float moveSpeed = Math::Lerp(s_minMoveSpeed, s_maxMoveSpeed, m_scale);
+	const float moveSpeed = Math::Lerp(m_minMoveSpeed, m_maxMoveSpeed, m_scale);
 	SetVelocity(vel * moveSpeed);
 	SetMaxSpeed(moveSpeed);
 
-	m_rotationSpeed = Math::Lerp(s_minRotationSpeed, s_maxRotationSpeed, m_scale);
+	m_rotationSpeed = Math::Lerp(m_minRotationSpeed, m_maxRotationSpeed, m_scale);
 
 	SetMaxLives(1);
 	SetCurrentLives(1);
+}
+
+bool Asteroid::CollidesWith(const Entity& other) const
+{
+	return (dynamic_cast<const Ship*>(&other) != nullptr);
 }
