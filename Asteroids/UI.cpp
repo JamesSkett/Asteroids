@@ -35,4 +35,14 @@ void UI::RenderPlayerStats(sf::RenderWindow& rw)
 		text.setPosition(rw.getSize().x - 150, 10);
 		rw.draw(text);
 	}
+	else
+	{
+		text.setString("Game Over");
+		text.setPosition(rw.getSize().x / 2 - (text.getLocalBounds().width / 2), rw.getSize().y / 2);
+		rw.draw(text);
+
+		text.setString("High Score: " + std::to_string(m_World.GetFinalScore()));
+		text.setPosition(rw.getSize().x / 2 - (text.getLocalBounds().width / 2), rw.getSize().y / 2 + 50);
+		rw.draw(text);
+	}
 }
