@@ -4,8 +4,9 @@
 #include "Asteroid.h"
 
 #include <random>
+
 GameWorld::GameWorld(Window& window)
-	: m_window(window)
+	: m_window(window), m_UI(*this)
 {
 }
 
@@ -18,7 +19,7 @@ bool GameWorld::Load()
 	success &= m_resources.m_asteroidTex.loadFromFile("./assets/Asteroid.png");
 	success &= m_resources.m_bulletTex.loadFromFile("./assets/Bullet.png");
 
-	//success &= m_Resources.m_MainFont.loadFromFile("./assets/Fonts/RussoOne-Regular.ttf");
+	success &= m_resources.m_mainFont.loadFromFile("./assets/Exo.ttf");
 
 	m_ship = SpawnEntity<Ship>();
 
@@ -47,6 +48,8 @@ void GameWorld::Draw()
 			entity->Draw(GetRenderWindow());
 		}
 	}
+
+	m_UI.Render(GetRenderWindow());
 }
 
 void GameWorld::Shutdown()
@@ -105,7 +108,7 @@ void GameWorld::UpdateAsteroids(float dt)
 	m_asteroidSpawnTimer -= dt;
 	if (m_asteroidSpawnTimer < 0.0f)
 	{
-		m_asteroidSpawnTimer += s_asteroidSpawnTime;
+		m_asteroidSpawnTimer += m_asteroidSpawnTime;
 
 		SpawnNewAsteroid();
 	}
