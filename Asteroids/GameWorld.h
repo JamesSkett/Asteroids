@@ -30,11 +30,14 @@ public:
 	const Resources& GetResources() const { return m_resources; }
 	const Ship* GetShip() const { return m_ship; }
 
+	void SetFinalScore(int score) { m_finalScoreCount = score; }
+	int GetFinalScore() const { return m_finalScoreCount; }
+
 	template<typename T>
 	T* SpawnEntity();
 
 private:
-	const float m_asteroidSpawnTime = 5.0f;
+	const float m_asteroidSpawnTime = 8.0f;
 
 	Resources m_resources;
 
@@ -47,6 +50,7 @@ private:
 	UI m_UI;
 
 	float m_asteroidSpawnTimer = m_asteroidSpawnTime;
+	int m_finalScoreCount = 0;
 
 	void UpdateEntities(float dt);
 	void UpdateAsteroids(float dt);

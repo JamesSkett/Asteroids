@@ -32,9 +32,22 @@ bool GameWorld::Load()
 
 void GameWorld::Update(float dt)
 {
-	UpdateEntities(dt);
-	UpdateAsteroids(dt);
-	UpdateCollisions();
+	if (m_ship != nullptr)
+	{
+		UpdateEntities(dt);
+		UpdateAsteroids(dt);
+		UpdateCollisions();
+	}
+	else
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		{
+			m_entities.clear();
+			m_ship = SpawnEntity<Ship>();
+			SpawnNewAsteroid();
+			SpawnNewAsteroid();
+		}
+	}
 }
 
 void GameWorld::Draw()
