@@ -29,8 +29,8 @@ protected:
 private:
 	e_asteroidSize m_asteroidSize = e_asteroidSize::LARGE;
 
-	const float m_minMoveSpeed = 50.0f;
-	const float m_maxMoveSpeed = 100.0f;
+	const float m_minMoveSpeed = 25.0f;
+	const float m_maxMoveSpeed = 50.0f;
 	const float m_minRotationSpeed = Math::Pi * 0.25f;
 	const float m_maxRotationSpeed = Math::Pi * 0.5f;
 	const float m_enableWrapTime = 0.5f;
