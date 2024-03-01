@@ -14,20 +14,24 @@ Bullet::Bullet(GameWorld& world)
 	SetRadius(5.0f);
 }
 
-void Bullet::Launch(sf::Vector2f startPos, sf::Vector2f direction, const Entity* owner)
+void Bullet::Launch(sf::Vector2f startPos, sf::Vector2f direction, Entity* owner)
 {
 	SetPosition(startPos);
-	SetVelocity(Math::Normalised(direction) * sBulletSpeed);
+	SetVelocity(Math::Normalised(direction) * m_bulletSpeed);
 
-	mOwner = owner;
+	m_owner = owner;
 }
 
 void Bullet::OnCollision(Entity& other)
 {
-	if (&other != mOwner)
+	if (&other != m_owner)
 	{
 		other.ApplyDamage(this, 1);
 		Kill();
+		if (Ship* ship = dynamic_cast<Ship*>(m_owner))
+		{
+			ship->UpdateScore(50);
+		}
 	}
 }
 
@@ -46,5 +50,5 @@ void Bullet::OnUpdate(float dt)
 bool Bullet::CollidesWith(const Entity& other) const
 {
 	//Make sure the bullet does not collide with owner
-	return &other != mOwner && ((dynamic_cast<const Asteroid*>(&other) != nullptr) /*|| (dynamic_cast<const Enemy*>(&other) != nullptr)*/);
+	return &other != m_owner && ((dynamic_cast<const Asteroid*>(&other) != nullptr) /*|| (dynamic_cast<const Enemy*>(&other) != nullptr)*/);
 }

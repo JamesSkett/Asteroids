@@ -6,12 +6,12 @@ public:
 
 	Bullet(GameWorld& world);
 
-	void Launch(sf::Vector2f startPos, sf::Vector2f direction, const Entity* owner);
+	void Launch(sf::Vector2f startPos, sf::Vector2f direction, Entity* owner);
 
-	const Entity* GetOwner() const { return mOwner ? mOwner : this; }
-	float		  GetDamage() const { return mDamage; }
+	const Entity* GetOwner() const { return m_owner ? m_owner : this; }
+	float		  GetDamage() const { return m_damage; }
 
-	static float GetBulletSpeed() { return sBulletSpeed; }
+	float GetBulletSpeed() { return m_bulletSpeed; }
 
 	void OnCollision(Entity& other) override;
 
@@ -21,10 +21,10 @@ private:
 
 	bool CollidesWith(const Entity& other) const override;
 
-	static constexpr float sBulletSpeed = 1750.0f;
+	const float m_bulletSpeed = 1750.0f;
 
-	const Entity* mOwner = nullptr;
+	Entity* m_owner = nullptr;
 
-	float mDamage = 10.0f;
+	float m_damage = 10.0f;
 };
 
