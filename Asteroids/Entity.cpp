@@ -4,6 +4,7 @@
 Entity::Entity(GameWorld& world, const sf::Texture& texture)
 	: m_world(world), m_sprite(texture)
 {
+	GetSprite().setOrigin(GetSprite().getLocalBounds().width * Math::Half, GetSprite().getLocalBounds().height * Math::Half);
 	m_inGrace = false;
 }
 

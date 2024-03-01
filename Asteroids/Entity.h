@@ -70,7 +70,7 @@ protected:
 
 	// Override to implement update or render functionality for this entity.
 	virtual void OnUpdate(float dt) { }
-	virtual void OnRender(sf::RenderTexture& rt) { }
+	virtual void OnDraw(sf::RenderTexture& rt) { }
 
 	float m_rotation = 0.0f;
 
