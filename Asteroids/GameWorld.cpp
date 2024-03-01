@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Ship.h"
 #include "Asteroid.h"
+#include "ShieldPickup.h"
 
 #include <random>
 
@@ -18,6 +19,7 @@ bool GameWorld::Load()
 	success &= m_resources.m_shipTex.loadFromFile("./assets/Ship.png");
 	success &= m_resources.m_asteroidTex.loadFromFile("./assets/Asteroid.png");
 	success &= m_resources.m_bulletTex.loadFromFile("./assets/Bullet.png");
+	success &= m_resources.m_shieldTex.loadFromFile("./assets/Shield.png");
 
 	success &= m_resources.m_mainFont.loadFromFile("./assets/Exo.ttf");
 
@@ -36,6 +38,7 @@ void GameWorld::Update(float dt)
 	{
 		UpdateEntities(dt);
 		UpdateAsteroids(dt);
+		UpdatePickups(dt);
 		UpdateCollisions();
 	}
 	else
@@ -154,6 +157,22 @@ void GameWorld::SpawnNewAsteroid()
 	//Check if the spawn pos is within the current view of the screen if not then spawn enemy
 	Entity* newAsteroid = SpawnEntity<Asteroid>();
 	newAsteroid->SetPosition(spawnPos);
+}
+
+void GameWorld::UpdatePickups(float dt)
+{
+	m_spawnPickupTimer -= dt;
+	if (m_spawnPickupTimer < 0.0f)
+	{
+		m_spawnPickupTimer = m_pickupSpawnTime;
+
+		if (ShieldPickup* newPickup = SpawnEntity<ShieldPickup>())
+		{
+			const sf::Vector2f spawnPos(Math::FRandRange(20, m_window.GetRenderWindow().getSize().x), Math::FRandRange(20, m_window.GetRenderWindow().getSize().y));
+
+			newPickup->SetPosition(spawnPos);
+		}
+	}
 }
 
 void GameWorld::UpdateCollisions()

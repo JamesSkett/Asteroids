@@ -13,6 +13,7 @@ public:
 		sf::Texture m_shipTex;
 		sf::Texture	m_asteroidTex;
 		sf::Texture m_bulletTex;
+		sf::Texture m_shieldTex;
 
 		sf::Font m_mainFont;
 	};
@@ -38,6 +39,7 @@ public:
 
 private:
 	const float m_asteroidSpawnTime = 8.0f;
+	const float m_pickupSpawnTime = 20.0f;
 
 	Resources m_resources;
 
@@ -50,12 +52,15 @@ private:
 	UI m_UI;
 
 	float m_asteroidSpawnTimer = m_asteroidSpawnTime;
+	float m_spawnPickupTimer = m_pickupSpawnTime;
+
 	int m_finalScoreCount = 0;
 
 	void UpdateEntities(float dt);
 	void UpdateAsteroids(float dt);
 
 	void SpawnNewAsteroid();
+	void UpdatePickups(float dt);
 	void UpdateCollisions();
 };
 
