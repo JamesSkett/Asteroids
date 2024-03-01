@@ -20,8 +20,8 @@ protected:
 private:
 	// Movement
 
-	const float m_accelerationSpeed = 1000.0f;
-	const float m_maxSpeed = 250.0f;
+	const float m_accelerationSpeed = 500.0f;
+	const float m_maxSpeed = 100.0f;
 
 	// Gun
 	const float s_shootDelay = 0.5f;

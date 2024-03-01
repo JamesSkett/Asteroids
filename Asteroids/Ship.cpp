@@ -50,16 +50,17 @@ void Ship::OnRender(sf::RenderTexture& rt)
 
 void Ship::OnApplyDamage(const Entity* source, float& damage)
 {
-	//ship disappear
-	//wait a second
+	SetVelocity(sf::Vector2f(0.0f, 0.0f));
+	SetAcceleration(sf::Vector2f(0.0f, 0.0f));
 	//respawn ship in centre
 	SetPosition(sf::Vector2f(GetWorld().GetRenderWindow().getSize().x / 2, GetWorld().GetRenderWindow().getSize().y / 2));
-	//wait 3 seconds until damage can be taken again
+	
 	SetInGrace(true);
 }
 
 void Ship::OnDestroy()
 {
+	GetWorld().SetFinalScore(m_currentScore);
 }
 
 void Ship::UpdateMovement(float dt)
@@ -79,12 +80,12 @@ void Ship::UpdateMovement(float dt)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		m_rotation += 100.0f * dt;
+		m_rotation += 200.0f * dt;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		m_rotation -= 100.0f * dt;
+		m_rotation -= 200.0f * dt;
 	}
 
 	if (Math::LengthSq(accel) > 0.0f)
