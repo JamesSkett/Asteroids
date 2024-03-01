@@ -39,7 +39,7 @@ public:
 	float GetMaxLives() const { return m_maxLives; }
 
 	void  SetCurrentLives(float lives) { m_currentLives = lives; }
-	float GetCurrentLives() const { return m_currentLives; }
+	int GetCurrentLives() const { return m_currentLives; }
 
 	void SetCanWrap(bool canWrap) { m_canWrap = canWrap; }
 	bool GetCanWrap() const { return m_canWrap; }
@@ -75,7 +75,7 @@ protected:
 	float m_rotation = 0.0f;
 
 private:
-	static constexpr float s_graceTime = 0.5f;
+	const float s_graceTime = 3.0f;
 
 	GameWorld& m_world;
 

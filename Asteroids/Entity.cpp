@@ -4,7 +4,7 @@
 Entity::Entity(GameWorld& world, const sf::Texture& texture)
 	: m_world(world), m_sprite(texture)
 {
-	m_inGrace = true;
+	m_inGrace = false;
 }
 
 Entity::~Entity()
@@ -18,12 +18,15 @@ void Entity::Destroy()
 
 void Entity::Update(float dt)
 {
-	m_graceTimer -= dt;
-	if (m_graceTimer < 0.0f)
+	if (m_inGrace)
 	{
-		m_graceTimer += s_graceTime;
+		m_graceTimer -= dt;
+		if (m_graceTimer < 0.0f)
+		{
+			m_graceTimer += s_graceTime;
 
-		m_inGrace = false;
+			m_inGrace = false;
+		}
 	}
 
 	// Update velocity based on acceleration and deltaTime
@@ -50,10 +53,6 @@ void Entity::Update(float dt)
 		if (m_position.y > m_world.GetRenderWindow().getSize().y)
 			m_position.y = -m_sprite.getLocalBounds().height * Math::Half;
 	}
-	else
-	{
-
-	}
 
 	m_sprite.setPosition(m_position);
 	m_sprite.setRotation(m_rotation);
@@ -67,7 +66,7 @@ void Entity::Draw(sf::RenderWindow& rt)
 
 bool Entity::TestCollision(const Entity& other)
 {
-	if (!m_inGrace)
+	if (!m_inGrace && !other.GetInGrace())
 	{
 		if (CollidesWith(other) || other.CollidesWith(*this))
 		{
