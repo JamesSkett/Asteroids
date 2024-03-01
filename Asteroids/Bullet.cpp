@@ -10,7 +10,6 @@ Bullet::Bullet(GameWorld& world)
 	SetMaxLives(1);
 	GetSprite().setScale(0.3f, 0.3f);
 	SetCanWrap(false);
-	GetSprite().setOrigin(GetSprite().getLocalBounds().width * Math::Half, GetSprite().getLocalBounds().height * Math::Half);
 	SetRadius(5.0f);
 }
 
