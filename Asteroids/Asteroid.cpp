@@ -9,7 +9,6 @@ Asteroid::Asteroid(GameWorld& world)
 	SetCurrentLives(1);
 	SetAsteroidSize(e_asteroidSize::LARGE);
 	SetCanWrap(false);
-	GetSprite().setOrigin(GetSprite().getLocalBounds().width * Math::Half, GetSprite().getLocalBounds().height * Math::Half);
 
 }
 
@@ -18,7 +17,10 @@ void Asteroid::OnCollision(Entity& other)
 	if (Ship* ship = dynamic_cast<Ship*>(&other))
 	{
 		ship->ApplyDamage(this, 1);
-
+		if (ship->GetShieldActive())
+		{
+			Kill();
+		}
 	}
 }
 
