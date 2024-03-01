@@ -1,5 +1,6 @@
 #include "UI.h"
 #include "GameWorld.h"
+#include "Ship.h"
 
 UI::UI(const GameWorld& world)
 	: m_World(world)
@@ -13,12 +14,25 @@ void UI::Render(sf::RenderWindow& rw)
 
 void UI::RenderPlayerStats(sf::RenderWindow& rw)
 {
-	const sf::Vector2f& vpSize = rw.getView().getSize();
-
 	sf::Text text;
-	text.setFont(m_World.GetResources().m_MainFont);
-	text.setCharacterSize(32);
+	text.setFont(m_World.GetResources().m_mainFont);
+	text.setCharacterSize(24);
 	text.setStyle(sf::Text::Bold);
 
+	const Ship* ship = m_World.GetShip();
 
+	if (ship != nullptr)
+	{
+		std::string outputStr = "Lives: " + std::to_string(ship->GetCurrentLives());
+
+		text.setString(outputStr);
+		text.setPosition(10.0f, 10.0f);
+		rw.draw(text);
+
+		outputStr = "Score: " + std::to_string(ship->GetCurrentScore());
+
+		text.setString(outputStr);
+		text.setPosition(rw.getSize().x - 150, 10);
+		rw.draw(text);
+	}
 }

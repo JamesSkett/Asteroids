@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "UI.h"
 
 class Entity;
 class Ship;
@@ -13,7 +14,7 @@ public:
 		sf::Texture	m_asteroidTex;
 		sf::Texture m_bulletTex;
 
-		sf::Font m_MainFont;
+		sf::Font m_mainFont;
 	};
 
 	GameWorld(Window& window);
@@ -27,12 +28,13 @@ public:
 
 	sf::RenderWindow& GetRenderWindow() const { return m_window.GetRenderWindow(); }
 	const Resources& GetResources() const { return m_resources; }
+	const Ship* GetShip() const { return m_ship; }
 
 	template<typename T>
 	T* SpawnEntity();
 
 private:
-	static constexpr float s_asteroidSpawnTime = 5.0f;
+	const float m_asteroidSpawnTime = 5.0f;
 
 	Resources m_resources;
 
@@ -42,7 +44,9 @@ private:
 	std::vector<Entity*> m_entities;
 	std::vector<Entity*> m_entitiesToAdd;
 
-	float m_asteroidSpawnTimer = s_asteroidSpawnTime;
+	UI m_UI;
+
+	float m_asteroidSpawnTimer = m_asteroidSpawnTime;
 
 	void UpdateEntities(float dt);
 	void UpdateAsteroids(float dt);

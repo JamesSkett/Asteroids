@@ -20,9 +20,28 @@ void Ship::UpdateScore(int val)
 
 void Ship::OnUpdate(float dt)
 {
+	if (GetInGrace())
+	{
+		m_currentAlpha += m_alphaDirection * m_alphaChangeSpeed * dt;
+
+		if (m_currentAlpha < m_minAlpha)
+		{
+			m_currentAlpha = m_minAlpha;
+			m_alphaDirection = 1;
+		}
+		else if (m_currentAlpha >= 255)
+		{
+			m_currentAlpha = 255;
+			m_alphaDirection = -1;
+		}
+
+	}
+	else m_currentAlpha = 255;
+
+
 	UpdateMovement(dt);
 	UpdateGun(dt);
-
+	GetSprite().setColor(sf::Color(255, 255, 255, m_currentAlpha));
 }
 
 void Ship::OnRender(sf::RenderTexture& rt)
@@ -34,7 +53,9 @@ void Ship::OnApplyDamage(const Entity* source, float& damage)
 	//ship disappear
 	//wait a second
 	//respawn ship in centre
+	SetPosition(sf::Vector2f(GetWorld().GetRenderWindow().getSize().x / 2, GetWorld().GetRenderWindow().getSize().y / 2));
 	//wait 3 seconds until damage can be taken again
+	SetInGrace(true);
 }
 
 void Ship::OnDestroy()
@@ -47,7 +68,7 @@ void Ship::UpdateMovement(float dt)
 
 	// Calculate thrust with possible adjustments based on SFML coordinate system
 	sf::Vector2f thrustDirection = sf::Vector2f(sin(Math::DegreesToRadians(m_rotation)), -cos(Math::DegreesToRadians(m_rotation)));
-	accel = (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) ? thrustDirection * s_accelerationSpeed : sf::Vector2f(0.f, 0.f);
+	accel = (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) ? thrustDirection * m_accelerationSpeed : sf::Vector2f(0.f, 0.f);
 	
 
 
@@ -69,7 +90,7 @@ void Ship::UpdateMovement(float dt)
 	if (Math::LengthSq(accel) > 0.0f)
 	{
 		accel = Math::Normalised(accel);
-		accel *= s_accelerationSpeed;
+		accel *= m_accelerationSpeed;
 
 		SetAcceleration(accel);
 	}
