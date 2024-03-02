@@ -29,7 +29,7 @@ bool GameWorld::Load()
 	SpawnNewAsteroid();
 
 	// Return result of above statements
-	return true;
+	return success;
 }
 
 void GameWorld::Update(float dt)
