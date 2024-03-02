@@ -5,8 +5,7 @@ Ship::Ship(GameWorld& world)
 	: Entity(world, world.GetResources().m_shipTex)
 {
 	SetPosition(sf::Vector2f(400, 400));
-	GetSprite().setOrigin(GetSprite().getLocalBounds().width * Math::Half, GetSprite().getLocalBounds().height * Math::Half);
-	SetRadius(32.0f);
+	SetRadius(16.0f);
 }
 
 Ship::~Ship()
@@ -16,6 +15,16 @@ Ship::~Ship()
 void Ship::UpdateScore(int val)
 {
 	m_currentScore += val;
+}
+
+void Ship::AddShield(int val)
+{
+	m_currentShieldHealth += val;
+
+	if (m_currentShieldHealth == m_maxShieldHealth)
+	{
+		m_currentShieldHealth = m_maxShieldHealth;
+	}
 }
 
 void Ship::OnUpdate(float dt)
@@ -41,21 +50,30 @@ void Ship::OnUpdate(float dt)
 
 	UpdateMovement(dt);
 	UpdateGun(dt);
+	UpdateShield();
 	GetSprite().setColor(sf::Color(255, 255, 255, m_currentAlpha));
 }
 
-void Ship::OnRender(sf::RenderTexture& rt)
+void Ship::OnDraw(sf::RenderTexture& rt)
 {
 }
 
 void Ship::OnApplyDamage(const Entity* source, float& damage)
 {
-	SetVelocity(sf::Vector2f(0.0f, 0.0f));
-	SetAcceleration(sf::Vector2f(0.0f, 0.0f));
-	//respawn ship in centre
-	SetPosition(sf::Vector2f(GetWorld().GetRenderWindow().getSize().x / 2, GetWorld().GetRenderWindow().getSize().y / 2));
-	
-	SetInGrace(true);
+	if (m_shieldActive)
+	{
+		m_currentShieldHealth -= damage;
+		damage = 0;
+	}
+	else
+	{
+		SetVelocity(sf::Vector2f(0.0f, 0.0f));
+		SetAcceleration(sf::Vector2f(0.0f, 0.0f));
+		//respawn ship in centre
+		SetPosition(sf::Vector2f(GetWorld().GetRenderWindow().getSize().x / 2, GetWorld().GetRenderWindow().getSize().y / 2));
+
+		SetInGrace(true);
+	}
 }
 
 void Ship::OnDestroy()
@@ -122,6 +140,15 @@ void Ship::UpdateGun(float dt)
 		}
 	}
 
+
+}
+
+void Ship::UpdateShield()
+{
+	if (m_currentShieldHealth > 0) 
+		m_shieldActive = true;
+	else 
+		m_shieldActive = false;
 
 }
 

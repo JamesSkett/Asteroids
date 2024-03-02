@@ -7,11 +7,14 @@ public:
 	~Ship();
 
 	int	  GetCurrentScore() const { return m_currentScore; }
+	int   GetShieldHealth() const { return m_currentShieldHealth; }
 	void  UpdateScore(int val);
+	void  AddShield(int val);
 
+	bool GetShieldActive() const { return m_shieldActive; }
 protected:
 	void OnUpdate(float dt) override;
-	void OnRender(sf::RenderTexture& rt) override;
+	void OnDraw(sf::RenderTexture& rt) override;
 
 	void OnApplyDamage(const Entity* source, float& damage) override;
 
@@ -36,7 +39,13 @@ private:
 	// Score
 	int m_currentScore = 0;
 
+	// Shield
+	const int m_maxShieldHealth = 3;
+	int m_currentShieldHealth = 0;
+	bool m_shieldActive = false;
+
 	void UpdateMovement(float dt);
 	void UpdateGun(float dt);
+	void UpdateShield();
 };
 
