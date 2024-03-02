@@ -34,6 +34,12 @@ void UI::RenderPlayerStats(sf::RenderWindow& rw)
 		text.setString(outputStr);
 		text.setPosition(rw.getSize().x - 150, 10);
 		rw.draw(text);
+
+		outputStr = "Shield: " + std::to_string(ship->GetShieldHealth());
+
+		text.setString(outputStr);
+		text.setPosition(10, rw.getSize().y - 40);
+		rw.draw(text);
 	}
 	else
 	{
@@ -43,6 +49,11 @@ void UI::RenderPlayerStats(sf::RenderWindow& rw)
 
 		text.setString("High Score: " + std::to_string(m_World.GetFinalScore()));
 		text.setPosition(rw.getSize().x / 2 - (text.getLocalBounds().width / 2), rw.getSize().y / 2 + 50);
+		rw.draw(text);
+
+		text.setString("Press Enter To Play Again");
+		text.setCharacterSize(16);
+		text.setPosition(rw.getSize().x / 2 - (text.getLocalBounds().width / 2), rw.getSize().y / 2 + 100);
 		rw.draw(text);
 	}
 }
