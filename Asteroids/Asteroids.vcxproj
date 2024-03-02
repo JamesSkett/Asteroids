@@ -85,6 +85,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ShieldPickup.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="ShieldPickup.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Window.h" />
