@@ -1,1 +1,5 @@
 # Asteroids
+
+To make sure my code is easy to expand and change I started by creating a window class to handle initialising the game window and event handling. I also created a GameWorld class to handle loading in resources updating all the objects within the game. To make it easy to add new objects into the game I created an Entity class which handles the basic operations for any entity. Then I can add a ship/bullet/asteroid class that all inherit from the entity class, I can then add functionality that is specific to that entity. In the GameWorld class I created a SpawnEntity function template which I can call to instantiate any of the child classes, and these will get added into a vector. This makes it easy to add and remove objects from the scene. I setup a small maths library to reduce code duplication and with the use of templates different data types a can be passed into the functions, this library can be easily added to with different math equations. 
+
+As an extra I added a shield pickup to the game so that when you have shield, and you get hit by an asteroid the shield gets hit and the player doesn't lose a life. 
