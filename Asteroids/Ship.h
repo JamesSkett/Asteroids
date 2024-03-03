@@ -27,7 +27,7 @@ private:
 	const float m_maxSpeed = 100.0f;
 
 	// Gun
-	const float s_shootDelay = 0.5f;
+	const float m_shootDelay = 0.5f;
 	float m_shootCooldown = 0.0f;
 
 	//Respawn

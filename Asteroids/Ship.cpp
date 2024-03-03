@@ -70,6 +70,7 @@ void Ship::OnApplyDamage(const Entity* source, float& damage)
 	}
 	else
 	{
+		//Reset Velocity
 		SetVelocity(sf::Vector2f(0.0f, 0.0f));
 		SetAcceleration(sf::Vector2f(0.0f, 0.0f));
 		//respawn ship in centre
@@ -89,16 +90,9 @@ void Ship::UpdateMovement(float dt)
 {
 	sf::Vector2f accel(0.0f, 0.0f);
 
-	// Calculate thrust with possible adjustments based on SFML coordinate system
+	// Calculate thrust and direction with possible adjustments
 	sf::Vector2f thrustDirection = sf::Vector2f(sin(Math::DegreesToRadians(m_rotation)), -cos(Math::DegreesToRadians(m_rotation)));
 	accel = (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) ? thrustDirection * m_accelerationSpeed : sf::Vector2f(0.f, 0.f);
-	
-
-
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	//{
-	//	accel.y += 1.0f;
-	//}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
@@ -128,14 +122,13 @@ void Ship::UpdateGun(float dt)
 {
 	sf::Vector2f gunDir = sf::Vector2f(sin(Math::DegreesToRadians(m_rotation)), -cos(Math::DegreesToRadians(m_rotation)));
 
-
 	m_shootCooldown -= dt;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		if (m_shootCooldown <= 0.0f)
 		{
-			m_shootCooldown = s_shootDelay;
+			m_shootCooldown = m_shootDelay;
 
 			if (Bullet* bullet = GetWorld().SpawnEntity<Bullet>())
 			{
@@ -160,13 +153,6 @@ void Ship::DrawShield(sf::RenderWindow& rw)
 {
 	if (m_shieldActive)
 	{
-		//const sf::FloatRect bounds = GetSprite().getGlobalBounds();
-
-		//const sf::Vector2f topLeft(bounds.left, bounds.top);
-		//const sf::Vector2f bottomRight(bounds.left + bounds.width, bounds.top + bounds.height);
-
-		//const float size = Math::Length(bottomRight - topLeft);
-
 		sf::CircleShape shield(24.f);
 
 		shield.setPosition(GetPosition().x - shield.getRadius(), GetPosition().y - shield.getRadius());
