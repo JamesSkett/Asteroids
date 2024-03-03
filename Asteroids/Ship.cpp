@@ -54,8 +54,9 @@ void Ship::OnUpdate(float dt)
 	GetSprite().setColor(sf::Color(255, 255, 255, m_currentAlpha));
 }
 
-void Ship::OnDraw(sf::RenderTexture& rt)
+void Ship::OnDraw(sf::RenderWindow& rw)
 {
+	DrawShield(rw);
 }
 
 void Ship::OnApplyDamage(const Entity* source, float& damage)
@@ -64,6 +65,8 @@ void Ship::OnApplyDamage(const Entity* source, float& damage)
 	{
 		m_currentShieldHealth -= damage;
 		damage = 0;
+		SetInGrace(true);
+		SetGraceTime(1.5f);
 	}
 	else
 	{
@@ -73,6 +76,7 @@ void Ship::OnApplyDamage(const Entity* source, float& damage)
 		SetPosition(sf::Vector2f(GetWorld().GetRenderWindow().getSize().x / 2, GetWorld().GetRenderWindow().getSize().y / 2));
 
 		SetInGrace(true);
+		SetGraceTime(3.0f);
 	}
 }
 
@@ -150,5 +154,26 @@ void Ship::UpdateShield()
 	else 
 		m_shieldActive = false;
 
+}
+
+void Ship::DrawShield(sf::RenderWindow& rw)
+{
+	if (m_shieldActive)
+	{
+		//const sf::FloatRect bounds = GetSprite().getGlobalBounds();
+
+		//const sf::Vector2f topLeft(bounds.left, bounds.top);
+		//const sf::Vector2f bottomRight(bounds.left + bounds.width, bounds.top + bounds.height);
+
+		//const float size = Math::Length(bottomRight - topLeft);
+
+		sf::CircleShape shield(24.f);
+
+		shield.setPosition(GetPosition().x - shield.getRadius(), GetPosition().y - shield.getRadius());
+
+		shield.setFillColor(sf::Color(0, 0, 255, 100));
+
+		rw.draw(shield);
+	}
 }
 

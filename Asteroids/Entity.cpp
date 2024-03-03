@@ -24,7 +24,7 @@ void Entity::Update(float dt)
 		m_graceTimer -= dt;
 		if (m_graceTimer < 0.0f)
 		{
-			m_graceTimer += s_graceTime;
+			m_graceTimer += m_graceTime;
 
 			m_inGrace = false;
 		}
@@ -60,9 +60,10 @@ void Entity::Update(float dt)
 	OnUpdate(dt);
 }
 
-void Entity::Draw(sf::RenderWindow& rt)
+void Entity::Draw(sf::RenderWindow& rw)
 {
-	rt.draw(m_sprite);
+	rw.draw(m_sprite);
+	OnDraw(rw);
 }
 
 bool Entity::TestCollision(const Entity& other)

@@ -14,7 +14,7 @@ public:
 	bool GetShieldActive() const { return m_shieldActive; }
 protected:
 	void OnUpdate(float dt) override;
-	void OnDraw(sf::RenderTexture& rt) override;
+	void OnDraw(sf::RenderWindow& rw) override;
 
 	void OnApplyDamage(const Entity* source, float& damage) override;
 
@@ -47,5 +47,7 @@ private:
 	void UpdateMovement(float dt);
 	void UpdateGun(float dt);
 	void UpdateShield();
+
+	void DrawShield(sf::RenderWindow& rw);
 };
 

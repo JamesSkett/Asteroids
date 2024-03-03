@@ -32,13 +32,13 @@ void UI::RenderPlayerStats(sf::RenderWindow& rw)
 		outputStr = "Score: " + std::to_string(ship->GetCurrentScore());
 
 		text.setString(outputStr);
-		text.setPosition(rw.getSize().x - 150, 10);
+		text.setPosition(rw.getSize().x - 150.0f, 10.0f);
 		rw.draw(text);
 
 		outputStr = "Shield: " + std::to_string(ship->GetShieldHealth());
 
 		text.setString(outputStr);
-		text.setPosition(10, rw.getSize().y - 40);
+		text.setPosition(10.0f, rw.getSize().y - 40.0f);
 		rw.draw(text);
 	}
 	else

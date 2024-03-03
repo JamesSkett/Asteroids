@@ -13,7 +13,7 @@ public:
 	void Destroy();
 
 	void Update(float dt);
-	void Draw(sf::RenderWindow& rt);
+	void Draw(sf::RenderWindow& rw);
 
 	void				SetAcceleration(const sf::Vector2f& accel) { m_acceleration = accel; }
 	const sf::Vector2f& GetAcceleration() const { return m_acceleration; }
@@ -35,10 +35,10 @@ public:
 	sf::Sprite& GetSprite() { return m_sprite; }
 	const sf::Sprite& GetSprite() const { return m_sprite; }
 
-	void  SetMaxLives(float lives) { m_maxLives = lives; }
-	float GetMaxLives() const { return m_maxLives; }
+	void  SetMaxLives(int lives) { m_maxLives = lives; }
+	int GetMaxLives() const { return m_maxLives; }
 
-	void  SetCurrentLives(float lives) { m_currentLives = lives; }
+	void  SetCurrentLives(int lives) { m_currentLives = lives; }
 	int GetCurrentLives() const { return m_currentLives; }
 
 	void SetCanWrap(bool canWrap) { m_canWrap = canWrap; }
@@ -49,6 +49,9 @@ public:
 
 	void SetRadius(float radius) { m_radius = radius; }
 	float GetRadius() const { return m_radius; }
+
+	void SetGraceTime(float time) { m_graceTimer = time; }
+	float GetGraceTime() { return m_graceTimer; }
 
 	void Kill() { m_currentLives = 0; }
 	bool IsDead() { return m_currentLives == 0; }
@@ -70,12 +73,12 @@ protected:
 
 	// Override to implement update or render functionality for this entity.
 	virtual void OnUpdate(float dt) { }
-	virtual void OnDraw(sf::RenderTexture& rt) { }
+	virtual void OnDraw(sf::RenderWindow& rw) { }
 
 	float m_rotation = 0.0f;
 
 private:
-	const float s_graceTime = 3.0f;
+	float m_graceTime = 3.0f;
 
 	GameWorld& m_world;
 
@@ -87,7 +90,7 @@ private:
 	sf::Vector2f m_position = sf::Vector2f(0.0f, 0.0f);
 
 	float m_maxSpeed = 500.0f;
-	float m_graceTimer = s_graceTime;
+	float m_graceTimer = m_graceTime;
 
 	int m_maxLives = 3;
 	int m_currentLives = 3;
